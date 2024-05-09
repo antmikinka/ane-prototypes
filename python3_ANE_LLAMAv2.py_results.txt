@@ -1,8 +1,0 @@
-(coremltools-venv) antmi@Antwon-XinFin-Node:~/more-ane-transformers$ python3 ANE_LLAMAv2.py
-Instantiating LlamaSdpaAttention without passing a `layer_idx` is not recommended and will lead to errors during the forward call if caching is used. Please make sure to provide a `layer_idx` when creating this class.
-Traceback (most recent call last):
-  File "/home/antmi/more-ane-transformers/ANE_LLAMAv2.py", line 598, in <module>
-    class LlamaSdpaAttention(modeling_llama.LlamaSdpaAttention(modeling_llama.LlamaAttention)):
-  File "/home/antmi/coremltools-venv/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 267, in __init__
-    self.attention_dropout = config.attention_dropout
-AttributeError: type object 'LlamaAttention' has no attribute 'attention_dropout'
