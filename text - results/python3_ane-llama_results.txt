@@ -1,0 +1,65 @@
+(coremltools-venv) antmi@Antwon-XinFin-Node:~/more-ane-transformers$ python3 ane-llama.py
+MPS not available because the current PyTorch install was not built with MPS enabled.
+Torch version 2.2.0+cu121 has not been tested with coremltools. You may run into unexpected errors. Torch 2.1.0 is the most recent version that has been tested.
+baseline_model state_dict----------------------------------------------
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 2048)
+    (layers): ModuleList(
+      (0-21): 22 x LlamaDecoderLayer(
+        (self_attn): LlamaSdpaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=256, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=256, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=5632, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=5632, bias=False)
+          (down_proj): Linear(in_features=5632, out_features=2048, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+  )
+  (lm_head): Linear(in_features=2048, out_features=32000, bias=False)
+)
+baseline_model state_dict----------------------------------------------
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 2048)
+    (layers): ModuleList(
+      (0-21): 22 x LlamaDecoderLayer(
+        (self_attn): LlamaSdpaAttention(
+          (q_proj): Conv2d(2048, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (k_proj): Conv2d(2048, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (v_proj): Conv2d(2048, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (o_proj): Conv2d(2048, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Conv2d(2048, 5632, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (up_proj): Conv2d(2048, 5632, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (down_proj): Conv2d(5632, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+  )
+  (lm_head): Conv2d(2048, 32000, kernel_size=(1, 1), stride=(1, 1), bias=False)
+)
+optimized_model state_dict---------AFTER LOADING-------------------------------------
+input_ids shape
+Traceback (most recent call last):
+  File "/home/antmi/more-ane-transformers/ane-llama.py", line 92, in <module>
+    tokenized['input_ids'] = torch.nn.functional.pad(tokenized['input_ids'], padding_amount, "constant", 1)
+  File "/home/antmi/coremltools-venv/lib/python3.10/site-packages/torch/nn/functional.py", line 4495, in pad
+    return torch._C._nn.pad(input, pad, mode, value)
+RuntimeError: narrow(): length must be non-negative.

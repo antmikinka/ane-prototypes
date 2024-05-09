@@ -1,0 +1,5 @@
+(coremltools-venv) antmi@Antwon-XinFin-Node:~/more-ane-transformers/models$ python3 llama2ane.py
+  File "/home/antmi/more-ane-transformers/models/llama2ane.py", line 478
+    self.q_proj = nn.Conv2d(
+    ^^^^^^^^^^^^^
+SyntaxError: expression cannot contain assignment, perhaps you meant "=="?
